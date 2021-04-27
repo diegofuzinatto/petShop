@@ -178,7 +178,6 @@ class TelaCadastroProduto(Funcoes):
         self.valor_entry = Entry(self.frame_1)
         self.valor_entry.place(relx=0.05, rely=0.7, relwidth=0.3)
 
-
     def lista_frame2(self):
         self.listaPro = ttk.Treeview(self.frame_2, height=3,
                                      column=("col1", "col2", "col3", "col4", "col5"))

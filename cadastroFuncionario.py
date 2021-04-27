@@ -214,3 +214,4 @@ class TelaCadastroFuncionario(Funcoes):
         self.listaFun.configure(yscroll=self.scroolLista.set)
         self.scroolLista.place(relx=0.96, rely=0.1, relwidth=0.03, relheight=0.85)
         self.listaFun.bind("<Double-1>", self.OnDoubleClick)
+

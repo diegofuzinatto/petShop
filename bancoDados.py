@@ -54,8 +54,6 @@ class Banco:
 #         # cursor.execute(
 #         #     "INSERT INTO Clientes (cod_cliente, nome, endereco, CPF) VALUES (2, 'Maria', 'Rua 8, 35', 23156854215)")
 #
-        # data_inicio = '01-04-2023'
-        # data_fim = '30-04-2023'
         # cursor.execute("""SELECT cod_venda, cod_produto, cod_cliente, quantidade, data, valor FROM Vendas
         #     WHERE data BETWEEN ? AND ? ORDER BY data ASC""", (data_inicio, data_fim))
 

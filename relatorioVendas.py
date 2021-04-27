@@ -184,7 +184,6 @@ class TelaRelatorioVendas(Funcoes):
         self.faturamento_entry = Entry(self.frame_1)
         self.faturamento_entry.place(relx=0.8, rely=0.7, relwidth=0.1)
         
-
     def lista_frame2(self):
         self.listaVen = ttk.Treeview(self.frame_2, height=3,
             column=("col1", "col2", "col3", "col4", "col5", "col6"))

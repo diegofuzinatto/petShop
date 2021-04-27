@@ -11,7 +11,6 @@ class Funcionario:
         self.funcao = funcao
         self.salario = salario
 
-
     def cadastrarFuncionario(self):
         banco = Banco()
 

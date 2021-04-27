@@ -9,8 +9,6 @@ class Produto:
         self.quantidade = quantidade
         self.valor = valor
         self.taxa_desconto = taxa_desconto
-    
-
 
     def cadastrarProduto(self):
         banco = Banco()

@@ -64,6 +64,5 @@ class Gerente():
         self.bt_sair = Button(self.frame_1, text="Sair", bd=2, bg = '#107db2',fg = 'white'
                                 , font = ('verdana', 8, 'bold'),)
         self.bt_sair.place(relx=0.05, rely=0.9, relwidth=0.9, relheight=0.09)
-
     
 Gerente()

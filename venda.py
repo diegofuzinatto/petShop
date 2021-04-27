@@ -16,7 +16,6 @@ class Venda:
         self.data_inicio = data_inicio
         self.data_fim = data_fim
     
-
     def select_lista(self):
         banco = Banco()
         try:
