@@ -9,6 +9,7 @@ class Funcoes():
         self.nome_entry.delete(0, END)
         self.quantidade_entry.delete(0, END)
         self.valor_entry.delete(0, END)
+        self.classificacaoChosen.current(1)
 
 
     def select_lista(self):
@@ -27,7 +28,9 @@ class Funcoes():
             col1, col2, col3, col4, col5 = self.listaPro.item(n, 'values')
             self.cod_produto_entry.insert(END, col1)
             self.nome_entry.insert(END, col2)
-            self.classificacao_entry.insert(END, col3)
+            for i, clas in enumerate(self.classificacaoChosen['values']):
+                if (clas == col3):
+                    self.classificacaoChosen.current(i)
             self.quantidade_entry.insert(END, col4)
             self.valor_entry.insert(END, col5)
     
