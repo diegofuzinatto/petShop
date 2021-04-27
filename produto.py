@@ -2,12 +2,13 @@ from bancoDados import Banco
 
 class Produto:
 
-    def __init__(self, cod_produto = "", nome = "", classificacao = "", quantidade = "", valor = ""):
+    def __init__(self, cod_produto = "", nome = "", classificacao = "", quantidade = "", valor = "", taxa_desconto=""):
         self.cod_produto = cod_produto
         self.nome = nome
         self.classificacao = classificacao
         self.quantidade = quantidade
         self.valor = valor
+        self.taxa_desconto = taxa_desconto
     
 
 
@@ -78,12 +79,12 @@ class Produto:
         banco = Banco()
         try:
             cursor = banco.conexao.cursor()
-            print(self.nome)
+      
             cursor.execute("""SELECT cod_produto, nome, classificacao, quantidade, valor FROM Produtos
             WHERE nome LIKE '%s' ORDER BY nome ASC""" % self.nome)
 
             lista = cursor.fetchall()
-            print(lista)
+    
             banco.conexao.commit()
             cursor.close()
 
@@ -91,5 +92,52 @@ class Produto:
         except:
             return "Erro de conexão com o banco de dados!"
         
+    def busca_nome_produto(self):
+        banco = Banco()
+        try:
+            cursor = banco.conexao.cursor()
+            cursor.execute("SELECT nome FROM Produtos WHERE cod_produto LIKE '%s'" % self.cod_produto)
+            
+            nome_produto = cursor.fetchall()
+            nome_produto = nome_produto[0][0]
+           
+            banco.conexao.commit()
+            cursor.close()
+
+            return nome_produto
+        except:
+            return "Erro de conexão com o banco de dados!"
+
+    def busca_produto_classificacao(self):
+        banco = Banco()
+        try:
+            cursor = banco.conexao.cursor()
+            print(self.classificacao)
+            cursor.execute("SELECT * FROM Produtos WHERE classificacao = '%s'" % self.classificacao)        
+           
+            lista = cursor.fetchall()
+    
+            banco.conexao.commit()
+            cursor.close()
+
+            return lista
+        except:
+            return "Erro de conexão com o banco de dados!"
+
+    def promocao_produto(self):
+        banco = Banco()
+        try:
+            cursor = banco.conexao.cursor()
+
+            cursor.execute("UPDATE Produtos SET valor = (valor * ?) WHERE classificacao = ?", 
+                (self.taxa_desconto, self.classificacao))
+            banco.conexao.commit()
+
+            cursor.close()
+
+            return "Promoção cadastrada com sucesso!"
+        except:
+            return "Ocorreu um erro ao realizar a promoção!"
+
 
     
