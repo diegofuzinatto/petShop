@@ -89,6 +89,40 @@ class Cliente:
             return lista
         except:
             return "Erro de conexão com o banco de dados!"
+
+    def lista_nomes_clientes(self):
+        banco = Banco()
+        try:
+            cursor = banco.conexao.cursor()
+
+            cursor.execute(
+                "SELECT cod_cliente, nome FROM Clientes ORDER BY nome ASC")
+                
+            lista = cursor.fetchall()
+            
+            banco.conexao.commit()
+            cursor.close()
+
+            return lista
+        except:
+            return "Ocorreu um erro na conexão com o banco de dados!"
+
+    def busca_nome_cliente(self):
+        banco = Banco()
+        try:
+            cursor = banco.conexao.cursor()
+            cursor.execute("SELECT nome FROM Clientes WHERE cod_cliente LIKE '%s'" % self.cod_cliente)
+            
+            nome_cliente = cursor.fetchall()
+            nome_cliente = nome_cliente[0][0]
+           
+            banco.conexao.commit()
+            cursor.close()
+
+            return nome_cliente
+        except:
+            return "Erro de conexão com o banco de dados!"
+
         
 
     

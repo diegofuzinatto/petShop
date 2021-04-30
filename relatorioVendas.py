@@ -4,9 +4,22 @@ from tkcalendar import Calendar, DateEntry
 
 from venda import Venda
 from produto import Produto
-#from cliente import Cliente
+from cliente import Cliente
 
 class Funcoes():
+    def __init__(self, cod_venda_entry, nome_produto_entry, nome_cliente_entry, quantidade_entry, data_entry, 
+        valor_entry, data_inicio_entry, data_fim_entry, faturamento_entry, listaVen):
+        self.cod_venda_entry = cod_venda_entry
+        self.nome_produto_entry = nome_produto_entry
+        self.nome_cliente_entry = nome_cliente_entry
+        self.quantidade_entry = quantidade_entry
+        self.data_entry = data_entry
+        self.valor_entry = valor_entry
+        self.data_inicio_entry = data_inicio_entry
+        self.data_fim_entry = data_fim_entry
+        self.faturamento_entry = faturamento_entry
+        self.listaVen = listaVen
+
     def limpa_tela(self):
         self.cod_venda_entry.delete(0, END)
         self.nome_produto_entry.delete(0, END)
@@ -33,6 +46,7 @@ class Funcoes():
 
         venda = Venda()
         produto = Produto()
+        cliente = Cliente()
 
         venda.data_inicio = self.data_inicio_entry.get()
         venda.data_fim = self.data_fim_entry.get()
@@ -45,13 +59,18 @@ class Funcoes():
 
             produto.cod_produto = val[1]
             nomeProduto = produto.busca_nome_produto()
-            self.listaVen.insert("", END, values=(val[0], nomeProduto, val[2], val[3], val[4], val[5]))
+
+            cliente.cod_cliente =val[2]
+            nomeCliente = cliente.busca_nome_cliente()
+
+            self.listaVen.insert("", END, values=(val[0], nomeProduto, nomeCliente, val[3], val[4], val[5]))
 
         self.faturamento_entry.insert(END, soma)
 
     def select_lista(self):
         venda = Venda()
         produto = Produto()
+        cliente = Cliente()
         lista = venda.select_lista()
 
         self.listaVen.delete(*self.listaVen.get_children())
@@ -59,7 +78,11 @@ class Funcoes():
         for i in lista:
             produto.cod_produto = i[1]
             nomeProduto = produto.busca_nome_produto()
-            self.listaVen.insert("", END, values=(i[0], nomeProduto, i[2], i[3], i[4], i[5]))
+
+            cliente.cod_cliente = i[2]
+            nomeCliente = cliente.busca_nome_cliente()
+
+            self.listaVen.insert("", END, values=(i[0], nomeProduto, nomeCliente, i[3], i[4], i[5]))
 
     def OnDoubleClick(self, event):
         self.limpa_tela()

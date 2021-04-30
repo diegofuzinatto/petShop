@@ -6,22 +6,10 @@ import cadastroProduto
 import relatorioVendas
 import cadastroPromocao
 
-root = Tk()
-
-class Gerente():
-    def __init__(self):
+class Funcoes():
+    def __init__(self, root):
         self.root = root
-        self.tela()
-        self.frames_da_tela()
-        self.widgets_frame1()
-        root.mainloop()
-
-    def tela(self):
-        self.root.title("Gerente")
-        self.root.configure(background= '#1e3743')
-        self.root.geometry("300x400")
-        self.root.resizable(False, False)
-
+        
     def cadastroFuncionario(self):
         cadastroFuncionario.TelaCadastroFuncionario()
 
@@ -33,6 +21,25 @@ class Gerente():
 
     def cadastroPromocao(self):
         cadastroPromocao.TelaCadastroPromocao()
+
+    def sair(self):
+        self.root.destroy()
+
+
+class Gerente(Funcoes):
+    def __init__(self):
+        root = Tk()
+        self.root = root
+        self.tela()
+        self.frames_da_tela()
+        self.widgets_frame1()
+        root.mainloop()
+
+    def tela(self):
+        self.root.title("Gerente")
+        self.root.configure(background= '#1e3743')
+        self.root.geometry("300x400")
+        self.root.resizable(False, False)
 
     def frames_da_tela(self):
         self.frame_1 = Frame(self.root, bd = 4, bg= '#dfe3ee',
@@ -62,7 +69,6 @@ class Gerente():
         
         ### Criação do botao sair
         self.bt_sair = Button(self.frame_1, text="Sair", bd=2, bg = '#107db2',fg = 'white'
-                                , font = ('verdana', 8, 'bold'),)
+                                , font = ('verdana', 8, 'bold'), command=self.sair)
         self.bt_sair.place(relx=0.05, rely=0.9, relwidth=0.9, relheight=0.09)
     
-Gerente()

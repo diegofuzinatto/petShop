@@ -4,16 +4,30 @@ from tkinter import ttk
 from produto import Produto
 
 class Funcoes():
+    def __init__(self, taxa_desconto_entry, classificacao_entry, listaPro):
+        self.taxa_desconto_entry = taxa_desconto_entry
+        self.classificacao_entry = classificacao_entry
+        self.listaPro = listaPro
+
     def limpa_tela(self):
-        self.taxa_promocao_entry.delete(0, END)
+        self.taxa_desconto_entry.delete(0, END)
 
     def promocao_produto(self):
         produto = Produto()
 
-        produto.taxa_desconto = (100 - int(self.taxa_desconto_entry.get())) / 100
+        #produto.taxa_desconto = (100 - int(self.taxa_desconto_entry.get())) / 100
+        taxa_desconto = (100 - int(self.taxa_desconto_entry.get())) / 100
         produto.classificacao = self.classificacao_entry.get()
+
+        lista = produto.busca_produto_classificacao()
+
+        for pro in lista:
+            valor = pro[4] * taxa_desconto
+            produto.valor = "{:.02f}".format(valor)
+            produto.cod_produto = pro[0]
+            produto.cadastra_promocao_produto()
         
-        produto.promocao_produto()
+        #produto.promocao_produto()
 
         self.busca_produto_classificacao()
 
@@ -23,7 +37,6 @@ class Funcoes():
         produto = Produto()
 
         produto.classificacao = self.classificacao_entry.get()
-        print(produto.classificacao)
 
         buscaProdutoClassificacao = produto.busca_produto_classificacao()
         for i in buscaProdutoClassificacao:
@@ -79,11 +92,11 @@ class TelaCadastroPromocao(Funcoes):
         self.lb_classificacao.place(relx= 0.05, rely= 0.1 )
 
         
-        self.classificacao_entry = StringVar(self.frame_1)                         # 2
-        self.classificacaoChosen = ttk.Combobox(self.frame_1, width=12, textvariable=self.classificacao_entry) #3
+        self.classificacao_entry = StringVar(self.frame_1)                         
+        self.classificacaoChosen = ttk.Combobox(self.frame_1, width=12, textvariable=self.classificacao_entry) 
         self.classificacaoChosen['values'] = ("Aves", "Cachorros", "Gatos", "Peixes", "Répteis")   
-        self.classificacaoChosen.place(relx= 0.05, rely= 0.2, relwidth= 0.2)             # 5
-        self.classificacaoChosen.current(1)                         # 6
+        self.classificacaoChosen.place(relx= 0.05, rely= 0.2, relwidth= 0.2)             
+        self.classificacaoChosen.current(1)                         
 
         ## Criação da label e entrada da taxa de desconto
         self.lb_taxa_desconto = Label(self.frame_1, text="Taxa de Desconto", bg='#dfe3ee', fg='#107db2')

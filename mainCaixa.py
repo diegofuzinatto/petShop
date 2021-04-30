@@ -5,10 +5,10 @@ import cadastroProduto
 import cadastroCliente
 import realizaVendas
 
-root = Tk()
 
 class Caixa():
     def __init__(self):
+        root = Tk()
         self.root = root
         self.tela()
         self.frames_da_tela()
@@ -29,6 +29,9 @@ class Caixa():
 
     def realizaVendas(self):
         realizaVendas.TelaRealizaVendas()
+
+    def sair(self):
+        self.root.destroy()
 
     def frames_da_tela(self):
         self.frame_1 = Frame(self.root, bd = 4, bg= '#dfe3ee',
@@ -53,7 +56,6 @@ class Caixa():
         
         ### Criação do botao sair
         self.bt_sair = Button(self.frame_1, text="Sair", bd=2, bg = '#107db2',fg = 'white'
-                                , font = ('verdana', 8, 'bold'),)
+                                , font = ('verdana', 8, 'bold'), command=self.sair)
         self.bt_sair.place(relx=0.05, rely=0.9, relwidth=0.9, relheight=0.09)
     
-Caixa()

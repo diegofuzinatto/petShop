@@ -4,6 +4,13 @@ from tkinter import ttk
 from cliente import Cliente
 
 class Funcoes():
+    def __init__(self, cod_cliente_entry, nome_entry, endereco_entry, CPF_entry, listaCli):
+        self.cod_cliente_entry = cod_cliente_entry
+        self.nome_entry = nome_entry
+        self.endereco_entry = endereco_entry
+        self.CPF_entry = CPF_entry
+        self.listaCli = listaCli
+
     def limpa_cliente(self):
         self.cod_cliente_entry.delete(0, END)
         self.nome_entry.delete(0, END)
@@ -14,16 +21,16 @@ class Funcoes():
         cliente = Cliente()
         lista = cliente.select_lista()
 
-        self.listaFun.delete(*self.listaFun.get_children())
+        self.listaCli.delete(*self.listaCli.get_children())
 
         for i in lista:
-            self.listaFun.insert("", END, values=i)
+            self.listaCli.insert("", END, values=i)
 
     def OnDoubleClick(self, event):
         self.limpa_cliente()
 
-        for n in self.listaFun.selection():
-            col1, col2, col3, col4 = self.listaFun.item(n, 'values')
+        for n in self.listaCli.selection():
+            col1, col2, col3, col4 = self.listaCli.item(n, 'values')
             self.cod_cliente_entry.insert(END, col1)
             self.nome_entry.insert(END, col2)
             self.endereco_entry.insert(END, col3)
@@ -68,17 +75,16 @@ class Funcoes():
         self.select_lista()
 
     def busca_cliente(self):
-        self.listaFun.delete(*self.listaFun.get_children())
+        self.listaCli.delete(*self.listaCli.get_children())
 
         cliente = Cliente()
 
         self.nome_entry.insert(END, '%')
-        print(self.nome_entry.get())
         cliente.nome = self.nome_entry.get()
 
         buscaNomeCliente = cliente.busca_cliente()
         for i in buscaNomeCliente:
-            self.listaFun.insert("", END, values=i)
+            self.listaCli.insert("", END, values=i)
 
         self.limpa_cliente()
 
@@ -167,21 +173,21 @@ class TelaCadastroCliente(Funcoes):
         self.endereco_entry.place(relx=0.05, rely=0.5, relwidth=0.85)
 
     def lista_frame2(self):
-        self.listaFun = ttk.Treeview(self.frame_2, height=3,
+        self.listaCli = ttk.Treeview(self.frame_2, height=3,
                                      column=("col1", "col2", "col3", "col4"))
-        self.listaFun.heading("#0", text="")
-        self.listaFun.heading("#1", text="Codigo")
-        self.listaFun.heading("#2", text="Nome")
-        self.listaFun.heading("#3", text="Endereço")
-        self.listaFun.heading("#4", text="CPF")
-        self.listaFun.column("#0", width=1)
-        self.listaFun.column("#1", width=30)
-        self.listaFun.column("#2", width=150)
-        self.listaFun.column("#3", width=150)
-        self.listaFun.column("#4", width=60)
-        self.listaFun.place(relx=0.01, rely=0.1, relwidth=0.95, relheight=0.85)
+        self.listaCli.heading("#0", text="")
+        self.listaCli.heading("#1", text="Codigo")
+        self.listaCli.heading("#2", text="Nome")
+        self.listaCli.heading("#3", text="Endereço")
+        self.listaCli.heading("#4", text="CPF")
+        self.listaCli.column("#0", width=1)
+        self.listaCli.column("#1", width=30)
+        self.listaCli.column("#2", width=150)
+        self.listaCli.column("#3", width=150)
+        self.listaCli.column("#4", width=60)
+        self.listaCli.place(relx=0.01, rely=0.1, relwidth=0.95, relheight=0.85)
 
         self.scroolLista = Scrollbar(self.frame_2, orient='vertical')
-        self.listaFun.configure(yscroll=self.scroolLista.set)
+        self.listaCli.configure(yscroll=self.scroolLista.set)
         self.scroolLista.place(relx=0.96, rely=0.1, relwidth=0.03, relheight=0.85)
-        self.listaFun.bind("<Double-1>", self.OnDoubleClick)
+        self.listaCli.bind("<Double-1>", self.OnDoubleClick)

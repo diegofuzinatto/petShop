@@ -64,6 +64,25 @@ class Venda:
             return lista
         except:
             return "Erro de conexão com o banco de dados!"
-        
 
+    def cadastra_venda(self):
+        banco = Banco()
+        try:
+            print(self.cod_produto)
+            print(self.cod_cliente)
+            print(self.quantidade)
+            print(self.data)
+            print(self.valor)
+            cursor = banco.conexao.cursor()
+            cursor.execute("INSERT INTO Vendas (cod_produto, cod_cliente, quantidade, data, valor) VALUES (?, ?, ?, ?, ?)",
+                (self.cod_produto, self.cod_cliente, self.quantidade, self.data, self.valor))
+            
+            banco.conexao.commit()
+            cursor.close()
+
+            return "Venda adicionada com sucesso!"
+        except:
+            return "Não foi possível finalizar a venda"        
+
+    
     

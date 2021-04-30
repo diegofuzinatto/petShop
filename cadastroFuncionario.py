@@ -1,9 +1,21 @@
 from tkinter import *
 from tkinter import ttk
+import hashlib
 
 from funcionario import Funcionario
 
 class Funcoes():
+    def __init__(self,cod_funcionario_entry, nome_entry, endereco_entry, CPF_entry, funcao_entry, salario_entry, 
+    senha_entry, listaFun):
+        self.cod_funcionario_entry = cod_funcionario_entry
+        self.nome_entry = nome_entry
+        self.endereco_entry = endereco_entry
+        self.CPF_entry = CPF_entry
+        self.funcao_entry = funcao_entry
+        self.salario_entry = salario_entry
+        self.senha_entry = senha_entry
+        self.listaFun = listaFun
+
     def limpa_funcionario(self):
         self.cod_funcionario_entry.delete(0, END)
         self.nome_entry.delete(0, END)
@@ -11,7 +23,7 @@ class Funcoes():
         self.CPF_entry.delete(0, END)
         self.funcao_entry.delete(0, END)
         self.salario_entry.delete(0, END)
-
+        self.senha_entry.delete(0, END)
 
     def select_lista(self):
         funcionario = Funcionario()
@@ -43,6 +55,9 @@ class Funcoes():
         funcionario.funcao = self.funcao_entry.get()
         funcionario.salario = self.salario_entry.get()
 
+        senhaMd5 = hashlib.md5(self.senha_entry.get().encode('utf-8'))
+        funcionario.senha = senhaMd5.hexdigest()
+
         funcionario.cadastrarFuncionario()
 
         self.select_lista()
@@ -58,6 +73,9 @@ class Funcoes():
         funcionario.funcao = self.funcao_entry.get()
         funcionario.salario = self.salario_entry.get()
         
+        senhaMd5 = hashlib.md5(self.senha_entry.get().encode('utf-8'))
+        funcionario.senha = senhaMd5.hexdigest()
+
         funcionario.altera_funcionario()
 
         self.select_lista()
@@ -84,7 +102,7 @@ class Funcoes():
         funcionario = Funcionario()
 
         self.nome_entry.insert(END, '%')
-        print(self.nome_entry.get())
+       
         funcionario.nome = self.nome_entry.get()
 
         buscaNomeFuncionario = funcionario.busca_funcionario()
@@ -92,6 +110,7 @@ class Funcoes():
             self.listaFun.insert("", END, values=i)
 
         self.limpa_funcionario()
+
 
 class TelaCadastroFuncionario(Funcoes):
     def __init__(self):
@@ -182,14 +201,21 @@ class TelaCadastroFuncionario(Funcoes):
         self.lb_funcao.place(relx=0.05, rely=0.6)
 
         self.funcao_entry = Entry(self.frame_1)
-        self.funcao_entry.place(relx=0.05, rely=0.7, relwidth=0.4)
+        self.funcao_entry.place(relx=0.05, rely=0.7, relwidth=0.2)
 
         ## Criação da label e entrada do salário
         self.lb_salario = Label(self.frame_1, text="Salário", bg= '#dfe3ee', fg = '#107db2')
-        self.lb_salario.place(relx=0.5, rely=0.6)
+        self.lb_salario.place(relx=0.3, rely=0.6)
 
         self.salario_entry = Entry(self.frame_1)
-        self.salario_entry.place(relx=0.5, rely=0.7, relwidth=0.4)
+        self.salario_entry.place(relx=0.3, rely=0.7, relwidth=0.2)
+        
+        ## Criação da label e entrada da senha
+        self.lb_senha = Label(self.frame_1, text="Senha", bg= '#dfe3ee', fg = '#107db2')
+        self.lb_senha.place(relx=0.7, rely=0.6)
+
+        self.senha_entry = Entry(self.frame_1, show='*')
+        self.senha_entry.place(relx=0.7, rely=0.7, relwidth=0.2)
 
     def lista_frame2(self):
         self.listaFun = ttk.Treeview(self.frame_2, height=3,

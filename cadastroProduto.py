@@ -4,13 +4,22 @@ from tkinter import ttk
 from produto import Produto
 
 class Funcoes():
+    def __init__(self, cod_produto_entry, nome_entry, quantidade_entry, valor_entry, classificacaoChosen, 
+        listaPro, classificacao_entry):
+        self.cod_produto_entry = cod_produto_entry
+        self.nome_entry = nome_entry
+        self.quantidade_entry = quantidade_entry
+        self.valor_entry = valor_entry
+        self.classificacao_entry = classificacao_entry
+        self.classificacaoChosen = classificacaoChosen
+        self.listaPro = listaPro
+
     def limpa_produto(self):
         self.cod_produto_entry.delete(0, END)
         self.nome_entry.delete(0, END)
         self.quantidade_entry.delete(0, END)
         self.valor_entry.delete(0, END)
         self.classificacaoChosen.current(1)
-
 
     def select_lista(self):
         produto = Produto()
@@ -40,7 +49,9 @@ class Funcoes():
         produto.nome =  self.nome_entry.get()
         produto.classificacao = self.classificacao_entry.get()
         produto.quantidade = self.quantidade_entry.get()
-        produto.valor = self.valor_entry.get()
+        valor = float(self.valor_entry.get())
+        valor = "{:.02f}".format(valor)
+        produto.valor = valor
 
         produto.cadastrarProduto()
 
@@ -54,7 +65,9 @@ class Funcoes():
         produto.nome =  self.nome_entry.get()
         produto.classificacao = self.classificacao_entry.get()
         produto.quantidade = self.quantidade_entry.get()
-        produto.valor = self.valor_entry.get()
+
+        valor = float(self.valor_entry.get())
+        produto.valor = "{:.02f}".format(valor)
         
         produto.altera_produto()
 
@@ -81,7 +94,6 @@ class Funcoes():
         produto = Produto()
 
         self.nome_entry.insert(END, '%')
-        print(self.nome_entry.get())
         produto.nome = self.nome_entry.get()
 
         buscaNomeProduto = produto.busca_produto()

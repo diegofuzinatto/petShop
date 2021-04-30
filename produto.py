@@ -2,13 +2,14 @@ from bancoDados import Banco
 
 class Produto:
 
-    def __init__(self, cod_produto = "", nome = "", classificacao = "", quantidade = "", valor = "", taxa_desconto=""):
+    def __init__(self, cod_produto = "", nome = "", classificacao = "", quantidade = "", valor = "", taxa_desconto="", operador=""):
         self.cod_produto = cod_produto
         self.nome = nome
         self.classificacao = classificacao
-        self.quantidade = quantidade
+        self.quantidade = quantidade   
         self.valor = valor
         self.taxa_desconto = taxa_desconto
+        self.operador = operador
 
     def cadastrarProduto(self):
         banco = Banco()
@@ -110,7 +111,7 @@ class Produto:
         banco = Banco()
         try:
             cursor = banco.conexao.cursor()
-            print(self.classificacao)
+            
             cursor.execute("SELECT * FROM Produtos WHERE classificacao = '%s'" % self.classificacao)        
            
             lista = cursor.fetchall()
@@ -122,13 +123,13 @@ class Produto:
         except:
             return "Erro de conexão com o banco de dados!"
 
-    def promocao_produto(self):
+    def cadastra_promocao_produto(self):
         banco = Banco()
         try:
             cursor = banco.conexao.cursor()
 
-            cursor.execute("UPDATE Produtos SET valor = (valor * ?) WHERE classificacao = ?", 
-                (self.taxa_desconto, self.classificacao))
+            cursor.execute("UPDATE Produtos SET valor = ? WHERE cod_produto = ?", 
+                (self.valor, self.cod_produto))
             banco.conexao.commit()
 
             cursor.close()
@@ -136,6 +137,21 @@ class Produto:
             return "Promoção cadastrada com sucesso!"
         except:
             return "Ocorreu um erro ao realizar a promoção!"
+
+    def altera_quantidade(self):
+        banco = Banco()
+        try:
+            cursor = banco.conexao.cursor()
+           
+            cursor.execute("UPDATE Produtos SET quantidade = quantidade - ? WHERE cod_produto = ?", 
+                (self.quantidade, self.cod_produto))
+            
+            banco.conexao.commit()
+            cursor.close()
+
+            return "Produto alterado com sucesso!"
+        except:
+            return "Ocorreu um erro ao alterar o produto!"
 
 
     
